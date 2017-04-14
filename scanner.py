@@ -93,7 +93,7 @@ gs = getstock()
 
 summ = 2
 count = 1
-while count <= 2735:
+while count <= 3200:
     try:
         ret = gs.go(count, summ)
         if ret == 1:
@@ -114,7 +114,7 @@ while count <= 2735:
         # break
 
 count = 300000
-while count <= 300409:
+while count <= 300800:
     try:
         ret = gs.go(count, summ)
         if ret == 1:
@@ -132,7 +132,7 @@ while count <= 300409:
         count += 1
 
 count = 600000
-while count <= 603998:
+while count <= 605000:
     try:
 
         ret = gs.go(count, summ)
