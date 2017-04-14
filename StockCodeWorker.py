@@ -13,7 +13,7 @@ class StockWorker():
         self.init_threadpool()
 
     def init_threadpool(self):
-        for i in range (1, 20):
+        for i in range (1, 40):
             thread = WThread(self)
             thread.start()
 
@@ -39,10 +39,12 @@ class WThread(threading.Thread):
         while True:
             code = self.worker.getCode()
             if code == None:
-                time.sleep(1)
+                time.sleep(10)
+                result = Result("", "", "", True, True)
+                self.worker.queue.put_nowait(result)
             else:
                 result = self.getStockInfo(code)
-                if result == "":
+                if result == None:
                     continue
                 else:
                     self.worker.queue.put_nowait(result)
@@ -54,16 +56,17 @@ class WThread(threading.Thread):
             stock_num = str(count).zfill(7)
         else:
             stock_num = '1' + str(count).zfill(6)
-        print(stock_num)
+        #print(stock_num)
         url = 'http://quotes.money.163.com/' + stock_num + '.html'
-        print(url)
+        #print(url)
 
         try:
             # req = urllib.Request(url, headers=headers)
             content = urllib.request.urlopen(url).read()
         except Exception as e:
-            print(e)
-            return ""
+            str111 = stock_num + "    " + str(e)
+            print(str111)
+            return None
         soup = BeautifulSoup(content)
         #  print content
         c = soup.findAll('div', {'class': 'stock_info'})
@@ -79,17 +82,19 @@ class WThread(threading.Thread):
         # industry = c[1].find('li')
 
         # industry_name = industry.contents[0].contents[0].encode('utf-8').strip()
-        print(industry_name.decode('utf-8'))
-        print(name.decode('utf-8'))
+        #print(industry_name.decode('utf-8'))
+        str111 = stock_num + "    "+ name.decode('utf-8')
+        print(str111)
 
-        return result(count, name, industry_name, True)
+        return Result(count, name, industry_name, True, False)
 
 
 
-class result():
-    def __init__(self, code, name, industry, exist):
+class Result():
+    def __init__(self, code, name, industry, exist, exit):
         self.code = code
         self.name = name
         self.industry = industry
         self.exist = exist
+        self.exit = exit
         return

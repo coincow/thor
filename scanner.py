@@ -134,7 +134,6 @@ while count <= 300800:
 count = 600000
 while count <= 605000:
     try:
-
         ret = gs.go(count, summ)
         if ret == 1:
             summ += 1
