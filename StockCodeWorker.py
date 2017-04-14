@@ -42,6 +42,7 @@ class WThread(threading.Thread):
                 time.sleep(10)
                 result = Result("", "", "", True, True)
                 self.worker.queue.put_nowait(result)
+                break
             else:
                 result = self.getStockInfo(code)
                 if result == None:
@@ -49,6 +50,7 @@ class WThread(threading.Thread):
                 else:
                     self.worker.queue.put_nowait(result)
 
+        print(str(self)+"    thread quit!")
 
     def getStockInfo(self, count):
         stock_num = str(count).zfill(7)

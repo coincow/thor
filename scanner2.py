@@ -35,7 +35,7 @@ worker = StockWorker(scope, queue)
 summ = 2
 while True:
     try:
-        result = queue.get(block=True, timeout=10)
+        result = queue.get(block=True, timeout=60)
         if result.exist == False:
             continue
         elif result.exit == True:
@@ -44,7 +44,6 @@ while True:
         ws.write(summ, 0, str(result.code).zfill(6))
         ws.write(summ, 1, result.name.decode('utf-8'))
         ws.write(summ, 2, result.industry.decode('utf-8'))
-        ws.write(summ, 3, result.exist)
     except Exception as e:
         print(e)
         break
@@ -52,4 +51,3 @@ while True:
 wb.save('stock2.xls')
 
 
-sys.exit(0)
