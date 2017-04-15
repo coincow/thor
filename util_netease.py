@@ -13,11 +13,11 @@ def getNewHoldings (stockCode):
         list = soupTable.find_all("tr")
 
         if (len(list) == 1):
-            return ""
+            return None
 
         return str(list[1:])
 
     except Exception as e:
         print(e)
-        return ""
-    return ""
+        return None
+    return None

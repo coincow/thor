@@ -58,7 +58,7 @@ class getstock:
             ws.write(summ, 0, str(count).zfill(6))
             ws.write(summ, 1, name.decode('utf-8'))
             ws.write(summ, 2, industry_name.decode('utf-8'))
-            if (holdings != ""):
+            if (holdings != None):
                 ws.write(summ, 4, holdings)
             return 1
 

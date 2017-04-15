@@ -70,25 +70,32 @@ class WThread(threading.Thread):
             print(str111)
             return None
         soup = BeautifulSoup(content)
-        #  print content
-        c = soup.findAll('div', {'class': 'stock_info'})
-        # print c
-        name = soup.find('h1', {'class': 'name'}).contents[1].contents[0].encode('utf-8')
-        # print name
 
-        c = soup.findAll('div', {'class': 'relate_stock clearfix'})
-        # print c[1]
-        c1 = c[1].find('li')
-        industry_name = c1.contents[0].string.encode('utf-8').strip()
-        # print name
-        # industry = c[1].find('li')
+
+        #  print content
+        try:
+            c = soup.findAll('div', {'class': 'stock_info'})
+            # print c
+            name = soup.find('h1', {'class': 'name'}).contents[1].contents[0].encode('utf-8')
+            # print name
+            c = soup.findAll('div', {'class': 'relate_stock clearfix'})
+            # print c[1]
+            c1 = c[1].find('li')
+            industry_name = c1.contents[0].string.encode('utf-8').strip()
+            # print name
+            # industry = c[1].find('li')
+        except Exception as e:
+            print(e)
+            return None
 
         # industry_name = industry.contents[0].contents[0].encode('utf-8').strip()
         #print(industry_name.decode('utf-8'))
-        str111 = stock_num + "    "+ name.decode('utf-8')
+
+        code = stock_num[1:]
+        str111 = code + "    "+ name.decode('utf-8')
         print(str111)
 
-        return Result(count, name, industry_name, True, False)
+        return Result(code, name, industry_name, True, False)
 
 
 
