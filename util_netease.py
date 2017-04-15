@@ -2,7 +2,6 @@ import urllib.request
 from bs4 import BeautifulSoup
 
 def getNewHoldings (stockCode):
-    stockCode = stockCode[1:]
     url = 'http://quotes.money.163.com/f10/nbcg_' + stockCode + '.html'
     try:
         content = urllib.request.urlopen(url).read()

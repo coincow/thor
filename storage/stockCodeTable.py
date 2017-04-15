@@ -68,3 +68,18 @@ class TableStockCode:
         for row in hintMany:
             print(row[0] + "    " + row[1].decode('utf-8') + "    " + row[2].decode('utf-8'))
         return
+
+
+
+    #获取所有股票代码
+    def getAllStockCode(self):
+        scope = []
+        sqlString = "SELECT * FROM STOCKCODE where EXIST=?"
+        v = (1,)
+        cursor = self.db.cursor()
+        hint = cursor.execute(sqlString, v)
+        hintAll = hint.fetchall()
+        for row in hintAll:
+            scope.append(row[0])
+        return scope
+        

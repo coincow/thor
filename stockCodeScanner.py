@@ -18,7 +18,6 @@ queue = queue.Queue(1000)
 worker = StockWorker(scope, queue)
 table = TableStockCode()
 
-summ = 2
 while True:
     try:
         result = queue.get(block=True, timeout=60)
