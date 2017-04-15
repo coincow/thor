@@ -51,7 +51,7 @@ class WThread(threading.Thread):
                     result = HoldingsResult(code, result, False)
                     self.worker.queue.put_nowait(result)
 
-        print(str(self)+"    thread quit!")
+        print(str(self)+"     quit!")
 
 
 class HoldingsResult():

@@ -27,6 +27,6 @@ while True:
     except Exception as e:
         print(e)
 
-table.printTable()
+#table.printTable()
 table.db.commit()
 table.db.close()

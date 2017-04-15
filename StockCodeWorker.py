@@ -50,7 +50,7 @@ class WThread(threading.Thread):
                 else:
                     self.worker.queue.put_nowait(result)
 
-        print(str(self)+"    thread quit!")
+        print(str(self)+"     quit!")
 
     def getStockInfo(self, count):
         stock_num = str(count).zfill(7)
@@ -66,7 +66,7 @@ class WThread(threading.Thread):
             # req = urllib.Request(url, headers=headers)
             content = urllib.request.urlopen(url).read()
         except Exception as e:
-            str111 = stock_num + "    " + str(e)
+            str111 = stock_num[1:] + "    " + str(e)
             print(str111)
             return None
         soup = BeautifulSoup(content)
