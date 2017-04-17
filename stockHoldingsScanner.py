@@ -15,8 +15,8 @@ while True:
         result = queue.get(block=True, timeout=60)
         if result.exit == True:
             break
-        print(result.code + "    " + result.holdings)
-        #generater.append(result.code, result.holdings)
+        #print(result.code + "    " + result.holdings)
+        generater.append(result.code, result.holdings)
     except Exception as e:
         print(e)
 
