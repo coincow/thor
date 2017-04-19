@@ -1,11 +1,12 @@
 # -*- coding: utf-8-*-
 
 # 抓取网易的股票信息，股票名字、代码、所属行业
-import re, urllib.request
+import urllib.request
+
 import xlwt
 from bs4 import BeautifulSoup
 
-import util_netease
+from holdings import stockHoldingParse
 
 count1 = 1
 
@@ -50,7 +51,7 @@ class getstock:
         # industry_name = industry.contents[0].contents[0].encode('utf-8').strip()
         print(industry_name.decode('utf-8'))
         print(name.decode('utf-8'))
-        holdings = util_netease.getNewHoldings(stock_num)
+        holdings = stockHoldingParse.getNewHoldings(stock_num)
         if name != '':
             print(summ)
             # print name

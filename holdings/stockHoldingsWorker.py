@@ -1,19 +1,22 @@
 import threading
 import time
-import util_netease
+
+from holdings import stockHoldingParse
+from holdings.stockHoldingsResult import HoldingsResult
 
 
 class HoldingsWorker():
 
-    def __init__(self, scope, queue):
+    def __init__(self, scope, queue, threadCount):
         self.queue = queue
         self.scope = scope
         self.cursor = 0
         self.size = len(scope)
+        self.threadCount = threadCount
         self.init_threadpool()
 
     def init_threadpool(self):
-        for i in range (1, 40):
+        for i in range (self.threadCount):
             thread = WThread(self)
             thread.start()
 
@@ -39,24 +42,14 @@ class WThread(threading.Thread):
         while True:
             code = self.worker.getCode()
             if code == None:
-                time.sleep(10)
-                result = HoldingsResult("", "", True)
+                result = HoldingsResult("", "", "", True)
                 self.worker.queue.put_nowait(result)
                 break
             else:
-                result = util_netease.getNewHoldings(code)
+                result = stockHoldingParse.getNewHoldings(code)
                 if result == None:
                     continue
                 else:
-                    result = HoldingsResult(code, result, False)
                     self.worker.queue.put_nowait(result)
 
         print(str(self)+"     quit!")
-
-
-class HoldingsResult():
-    def __init__(self, code, holdings, exit):
-        self.code = code
-        self.holdings = holdings
-        self.exit = exit
-        return
