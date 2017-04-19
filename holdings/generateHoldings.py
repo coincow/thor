@@ -4,6 +4,7 @@ class HoldingsGenerater:
 
     def start(self):
         f = open("holdings.html", "w")
+        f.write('''<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />''')
         f.write('''<head><title>30天内高管增持数据</title></head>''')
         f.write('''<table border="1">''')
         f.write('''<tr><th>代码</th><th>增持数据</th><th>增持比例</th><th>增持原因</th></tr>''')
