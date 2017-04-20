@@ -11,15 +11,18 @@ def getNewHoldings (stockCode):
     try:
         content = urllib.request.urlopen(url).read()
         soup = BeautifulSoup(content)
-        table = soup.find("table", {'class':'table_bg001 border_box limit_sale'})
+        tables = soup.findAll("table", {'class':'table_bg001 border_box limit_sale'})
+        if tables == None or len(tables) == 0:
+            return None
 
+        table = tables[1]
         soupTable = BeautifulSoup(str(table))
         list = soupTable.find_all("tr")
 
         if (len(list) == 1):
             return None
 
-        result = getLastWeekHoldings(stockCode, str(list[1:]))
+        result = getLastMonthHoldings(stockCode, str(list[1:]))
         if result == None or result.holding == "":
             return None
 
@@ -31,11 +34,15 @@ def getNewHoldings (stockCode):
     return None
 
 
-def getLastWeekHoldings(code, holdings):
+def getLastMonthHoldings(code, holdings):
     soup = BeautifulSoup(holdings)
     list = soup.find_all("tr")
     holding = ""
-    for i in range(0, len(list)):
+    reason = ""
+    num = ""
+    price = ""
+    line = 0
+    for i in range(len(list)):
         item = list[i]
 
         if str(item).__contains__("暂无数据"):
@@ -44,14 +51,26 @@ def getLastWeekHoldings(code, holdings):
         soupChild = BeautifulSoup(str(item))
         temp = soupChild.findAll("td")
 
-        if False == isInOneMonth(temp[3].string):
+        #减持的就不看了
+        if ((float)(temp[4].string)) <= 0:
             continue
 
-        if i != 0:
-            holding = holding + '''</br>'''
-        holding = holding + temp[0].string + ", " + temp[1].string + ", " + temp[2].string + ", " + temp[3].string
+        #抓取一个月内的数据,相信数据是排序的，need fixme?
+        if False == isInOneMonth(temp[2].string):
+            break
 
-    return HoldingsResult(code, holding, "", False)
+        if line != 0:
+            holding = holding + '''</br>'''
+            reason = reason + '''</br>'''
+            num = num + '''</br>'''
+            price = price + '''</br>'''
+        holding = holding + temp[0].string + ", " + temp[1].string + ", " + temp[2].string
+        num = num + temp[4].string
+        price = price + temp[5].string
+        reason = reason + temp[3].string
+        line = line + 1
+
+    return HoldingsResult(code, holding, num, price, reason, False)
 
 def isInOneMonth(time):
     dt = datetime.datetime.strptime(time, "%Y-%m-%d")
