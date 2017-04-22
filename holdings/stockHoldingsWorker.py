@@ -42,7 +42,7 @@ class WThread(threading.Thread):
         while True:
             code = self.worker.getCode()
             if code == None:
-                result = HoldingsResult("", "", "", "", "", True)
+                result = HoldingsResult("", "", "", "", "", "", True)
                 self.worker.queue.put_nowait(result)
                 break
             else:

@@ -1,10 +1,8 @@
 import datetime
 import urllib.request
-
 from bs4 import BeautifulSoup
-
 from holdings.stockHoldingsResult import HoldingsResult
-
+import sys
 
 def getNewHoldings (stockCode):
     url = 'http://quotes.money.163.com/f10/nbcg_' + stockCode + '.html'
@@ -29,7 +27,8 @@ def getNewHoldings (stockCode):
         return result
 
     except Exception as e:
-        print(e)
+        reason = "[%s]-----"%stockCode + str(e) + "    " + sys._getframe().f_code.co_filename + ":" + str(sys._getframe().f_lineno)
+        print(reason)
         return None
     return None
 
@@ -41,6 +40,7 @@ def getLastMonthHoldings(code, holdings):
     reason = ""
     num = ""
     price = ""
+    money = 0
     line = 0
     for i in range(len(list)):
         item = list[i]
@@ -68,9 +68,17 @@ def getLastMonthHoldings(code, holdings):
         num = num + temp[4].string
         price = price + temp[5].string
         reason = reason + temp[3].string
+        try:
+            money = money + float(temp[5].string) * float(temp[4].string)
+        except:
+            money = 0
         line = line + 1
 
-    return HoldingsResult(code, holding, num, price, reason, False)
+    if money == 0:
+        moneyString = "--"
+    else:
+        moneyString = "%.2f"%money
+    return HoldingsResult(code, holding, num, price, moneyString, reason, False)
 
 def isInOneMonth(time):
     dt = datetime.datetime.strptime(time, "%Y-%m-%d")
