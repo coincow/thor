@@ -37,7 +37,7 @@ class TableMargin:
         return
 
     def updateOneCode(self, code, buy, balance, percent):
-        sqlString = "UPDATE INTO STOCKMARGIN (CODE, BUY, BALANCE, PERCENT) VALUES(?,?,?,?)"
+        sqlString = "REPLACE INTO STOCKMARGIN (CODE, BUY, BALANCE, PERCENT) VALUES(?,?,?,?)"
         v = (code, buy, balance, percent,)
         cursor = self.db.cursor()
         cursor.execute(sqlString, v)

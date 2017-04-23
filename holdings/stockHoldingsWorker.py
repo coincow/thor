@@ -63,4 +63,4 @@ class WThread(threading.Thread):
                 else:
                     self.worker.queue.put_nowait(result)
 
-        print(str(self)+"     quit!")
+        #print(str(self)+"     quit!")

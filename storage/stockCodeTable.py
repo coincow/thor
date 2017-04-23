@@ -52,7 +52,7 @@ class TableStockCode:
             if fail > 10:
                 orgExist = False
 
-        sqlString = "UPDATE INTO STOCKCODE (CODE, NAME, INDUSTRY, EXIST, SCAN_SUM, SCAN_FAIL) VALUES(?,?,?,?,?,?)"
+        sqlString = "REPLACE INTO STOCKCODE (CODE, NAME, INDUSTRY, EXIST, SCAN_SUM, SCAN_FAIL) VALUES(?,?,?,?,?,?)"
         v = (code, name, industry, orgExist, scanSum, fail,)
         cursor = self.db.cursor()
         cursor.execute(sqlString, v)
