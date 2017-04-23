@@ -42,9 +42,12 @@ def getLastWeekMargin(code, list):
     soupChild = BeautifulSoup(str(list[endIndex]))
     end = soupChild.findAll("td")
 
-    buy = round(float((end[3].string).replace(',', '.')) - float((start[3].string).replace(',', '.')), 2)
-    balance = round(float((end[8].string).replace(',', '.')) - float((start[8].string).replace(',', '.')), 2)
-    percent = round(buy/balance, 2)
+    try:
+        buy = round(float((end[3].string).replace(',', '.')) - float((start[3].string).replace(',', '.')), 2)
+        balance = round(float((end[8].string).replace(',', '.')), 2)
+        percent = round(buy/balance, 2)*100
+    except:
+        return None
 
     return MarginResult(code[1:], buy, balance, percent, False)
 
