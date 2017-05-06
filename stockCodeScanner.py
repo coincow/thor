@@ -13,10 +13,10 @@ def getScope():
     return scope
 
 
+table = TableStockCode()
 scope = getScope()
 queue = queue.Queue(1000)
 worker = StockWorker(scope, queue)
-table = TableStockCode()
 
 while True:
     try:

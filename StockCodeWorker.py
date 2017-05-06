@@ -13,7 +13,7 @@ class StockWorker():
         self.init_threadpool()
 
     def init_threadpool(self):
-        for i in range (1, 40):
+        for i in range (1, 60):
             thread = WThread(self)
             thread.start()
 
