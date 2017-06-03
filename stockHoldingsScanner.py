@@ -41,7 +41,7 @@ def startProcess(task):
 #执行任务
 scope = TableStockCode().getAllStockCode()
 multiprocessing.Process(target=startProcess, args=(Configure().taskHolding, )).start()
-multiprocessing.Process(target=startProcess, args=(Configure().taskMargin, )).start()
+#multiprocessing.Process(target=startProcess, args=(Configure().taskMargin, )).start()
 #startProcess(Configure().taskMargin)
 #startProcess(Configure().taskHolding)
 print("\r\n\r\n[pid:%d]------task dispatched!!!"%os.getpid())

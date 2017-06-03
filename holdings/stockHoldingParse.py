@@ -83,7 +83,7 @@ def getLastMonthHoldings(code, holdings):
 def isInOneMonth(time):
     dt = datetime.datetime.strptime(time, "%Y-%m-%d")
     now = datetime.datetime.now()
-    sevenDays = datetime.timedelta(days=30)
+    sevenDays = datetime.timedelta(days=90)
     if now - dt > sevenDays:
         return False
     return True
